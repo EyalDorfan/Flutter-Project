@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
               // email verification is important and will be used in application
               final emailVerified = user?.emailVerified ?? false;
               if(emailVerified == true) {
-                print ('You are a verified user');
+                print ('You are a verified  LOL');
               } else {
                 print('You need to verify your email first');
               }
