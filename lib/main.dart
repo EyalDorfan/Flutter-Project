@@ -13,8 +13,9 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: const LayoutDesigner(),
-  ));
+    home: const LayoutDesigner()
+  )
+  );
 }
 
 class HomePage extends StatelessWidget {
@@ -36,17 +37,9 @@ class HomePage extends StatelessWidget {
               final user = FirebaseAuth.instance.currentUser;
               // verifies if email is verified or not
               // email verification is important and will be used in application
-              final emailVerified = user?.emailVerified ?? false;
-              if(emailVerified == true) {
-                print ('You are a verified');
-                return const Text('Done');
+              if(user?.emailVerified ?? false) {
               } else {
-                print('You need to verify your email first');
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(
-                //         builder: (context)=> const VerifyEmailView()
-                //     )
-                // );
+                return const VerifyEmailView();
               }
               return const Text('Done');
             default:
@@ -68,6 +61,17 @@ class VerifyEmailView extends StatefulWidget {
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+        children: [
+          const Text('Please verify your email address: '),
+          TextButton(
+              onPressed: () async {
+                final user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+              },
+              child: const Text('Send email verification'),
+          )
+        ],
+    );
   }
 }
